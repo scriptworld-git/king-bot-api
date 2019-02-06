@@ -106,6 +106,12 @@ async function login_to_lobby(axios: AxiosInstance, email: string, password: str
 	let rv: any = parse_token(res.data);
 	let tokenURL: string = rv.url;
 	token_lobby = rv.token;
+
+	if (!token_lobby) {
+		logger.error('error parsing lobby cookies. maybe you entered wrong credentials ?');
+		process.exit();
+	}
+
 	logger.info('token: ' + token_lobby, 'login');
 
 	options = {
@@ -117,7 +123,6 @@ async function login_to_lobby(axios: AxiosInstance, email: string, password: str
 
 	let cookies: AxiosResponse = await axios(options);
 
-	console.log(cookies);
 	options.url = cookies.headers.location;
 	cookies = await axios(options);
 
@@ -308,11 +313,12 @@ async function get_avatar_id(
 	let sitters: any = clash_obj(res.data, 'cache', 'response');
 
 	for (let sitter of sitters) {
-		if (sitter.data.length < 1) continue;
-		let s_data = sitter.data[0].data;
+		for (let data of sitter.data) {
+			let s_data = data.data;
 
-		if (s_data.worldName.toLowerCase() == gameworld_string && s_data.avatarName.toLowerCase() == sitter_name) {
-			return s_data.avatarIdentifier;
+			if (s_data.worldName.toLowerCase() == gameworld_string && s_data.avatarName.toLowerCase() == sitter_name) {
+				return s_data.avatarIdentifier;
+			}
 		}
 	}
 

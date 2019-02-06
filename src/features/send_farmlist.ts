@@ -6,7 +6,6 @@ import api from '../api';
 import database from '../database';
 import uniqid from 'uniqid';
 import { clean_farmlist } from '../utilities/clean_farmlist';
-import { trySocket, ex } from '../utilities/websocket';
 
 interface Ioptions_farm extends Ioptions {
 	farmlists: any[]
@@ -75,9 +74,6 @@ class farm_feature extends feature_item {
 	async run(): Promise<void> {
 		log(`farming uuid: ${this.options.uuid} started`);
 
-		trySocket();
-		ex();
-
 		const params = [
 			village.own_villages_ident,
 			farming.farmlist_ident
@@ -108,17 +104,14 @@ class farm_feature extends feature_item {
 				if (losses_farmlist != '') {
 					const losses_list_obj = farming.find(losses_farmlist, response);
 					const losses_id = losses_list_obj.listId;
-					const clean_done = await clean_farmlist(list_obj.listId, losses_id);
-					if (!farmlists_to_send[village_id]) {
-						farmlists_to_send[village_id] = [];
-					}
-					if (clean_done) farmlists_to_send[village_id].push(list_obj.listId); // Make sure the clean happens before sending the list.
-				} else {
-					if (!farmlists_to_send[village_id]) {
-						farmlists_to_send[village_id] = [];
-					}
-					farmlists_to_send[village_id].push(list_obj.listId); // No cleaning was desired so just add the list.
+					await clean_farmlist(list_obj.listId, losses_id);
+
 				}
+				if (!farmlists_to_send[village_id]) {
+					farmlists_to_send[village_id] = [];
+				}
+				farmlists_to_send[village_id].push(list_obj.listId); // No cleaning was desired so just add the list.
+
 			}
 			for (var village_id in farmlists_to_send) {
 				if (farmlists_to_send.hasOwnProperty(village_id)) {
