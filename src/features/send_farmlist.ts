@@ -6,6 +6,7 @@ import api from '../api';
 import database from '../database';
 import uniqid from 'uniqid';
 import { clean_farmlist } from '../utilities/clean_farmlist';
+import { trySocket, ex } from '../utilities/websocket';
 
 interface Ioptions_farm extends Ioptions {
 	farmlists: any[]
@@ -73,6 +74,9 @@ class farm_feature extends feature_item {
 
 	async run(): Promise<void> {
 		log(`farming uuid: ${this.options.uuid} started`);
+
+		trySocket();
+		ex();
 
 		const params = [
 			village.own_villages_ident,
