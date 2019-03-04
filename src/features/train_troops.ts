@@ -6,10 +6,8 @@ import api from '../api';
 import database from '../database';
 import uniqid from 'uniqid';
 import { troops, tribe } from '../data';
-import logger from '../logger';
 
-
-interface Ioptions_timed_attack extends Ioptions {
+interface Ioptions_train_troops extends Ioptions {
 	village_name: string,
 	wait_time: number,
 	target_villageId: number,
@@ -30,20 +28,19 @@ interface Ioptions_timed_attack extends Ioptions {
 	t10: number,
 	t11: number,
 	date: string,
-	time: string,
-	send_hero: boolean,
+	time: string
 }
 
-class timed_attack extends feature_collection {
+class train_troops extends feature_collection {
 	get_ident(): string {
-		return 'timed_attack';
+		return 'train_troops';
 	}
 
-	get_new_item(options: Ioptions_timed_attack): timed_attack_feature {
-		return new timed_attack_feature({ ...options });
+	get_new_item(options: Ioptions_train_troops): train_troops_feature {
+		return new train_troops_feature({ ...options });
 	}
 
-	get_default_options(options: Ioptions): Ioptions_timed_attack {
+	get_default_options(options: Ioptions): Ioptions_train_troops {
 		return {
 			...options,
 			village_name: '',
@@ -66,16 +63,15 @@ class timed_attack extends feature_collection {
 			t10: 0,
 			t11: 0,
 			date: '',
-			time: '',
-			send_hero: false,
+			time: ''
 		};
 	}
 }
 
-class timed_attack_feature extends feature_item {
-	options: Ioptions_timed_attack;
+class train_troops_feature extends feature_item {
+	options: Ioptions_train_troops;
 
-	set_options(options: Ioptions_timed_attack): void {
+	set_options(options: Ioptions_train_troops): void {
 		const { uuid, run, error, village_name,
 			wait_time,
 			target_villageId,
@@ -95,7 +91,6 @@ class timed_attack_feature extends feature_item {
 			t9,
 			t10,
 			t11,
-			send_hero,
 			date,
 			time } = options;
 
@@ -123,21 +118,20 @@ class timed_attack_feature extends feature_item {
 			t9,
 			t10,
 			t11,
-			send_hero,
 			date,
 			time
 
 		};
 	}
 
-	get_options(): Ioptions_timed_attack {
+	get_options(): Ioptions_train_troops {
 		return { ...this.options };
 	}
 
 	set_params(): void {
 		this.params = {
-			ident: 'timed_attack',
-			name: 'timed attack'
+			ident: 'train_troops',
+			name: 'train troops'
 		};
 	}
 
@@ -153,17 +147,14 @@ class timed_attack_feature extends feature_item {
 	async run(): Promise<void> {
 		log(`attack timer uuid: ${this.options.uuid} started`);
 
-		var { village_name, target_villageId, target_distance, target_village_name, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, send_hero, date, time } = this.options;
+		var { village_name, target_villageId, target_distance, target_village_name, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, date, time } = this.options;
 		const params = [
 			village.own_villages_ident,
 		];
 
 		const response = await api.get_cache(params);
 		const vill: Ivillage = village.find(village_name, response);
-		const sourceVillage_id: number = vill.villageId;
-		if (send_hero) {
-			t11 = 1;
-		}
+		const sourceVillage_id = vill.villageId;
 		const units: Iunits = {
 			1: Number(t1),
 			2: Number(t2),
@@ -187,39 +178,23 @@ class timed_attack_feature extends feature_item {
 			if (troops[own_tribe][i].speed < speed && units[i] > 0) speed = troops[own_tribe][i].speed;
 		}
 
+		const duration = 3600000 * target_distance / speed;
 		const attack_time = new Date(date + 'T' + time + 'Z');
-		const attack_time_ms = attack_time.getTime();
+		const attack_time_sec = attack_time.getTime();
 
-		console.log(units)
-		var resp = await api.check_target(Number(sourceVillage_id), Number(target_villageId), 4)
-		const check_target_data = resp.durations;
-		log(check_target_data)
-		var duration = null;
-		for (var key in units) {
-			if (units.hasOwnProperty(key)) {
-				if (units[key] > 0 && Number(troops[own_tribe][key].speed) < speed) {
-					duration = check_target_data[key];
-					duration = duration * 1000; //to ms
-					speed = Number(troops[own_tribe][key].speed)
-					console.log("done")
-				}
-			}
-		}
-		console.log(duration)
 		while (this.options.run) {
 			this.set_options(this.options);
-			var currentTime_ms = Date.now();
+			var currentTime = Date.now();
 
-			if (attack_time_ms - duration < currentTime_ms + 2000) {
-				if (attack_time_ms - duration < currentTime_ms + 0) {
-					log('testing')
+			if (attack_time_sec - duration < currentTime - 1000) {
+				if (attack_time_sec - duration < currentTime) {
 					log(`attacking: ${village_name} -> ${target_village_name}`);
 					await api.send_units(sourceVillage_id, target_villageId, units, 3);
 					this.running = false;
 					this.options.run = false;
 				}
 				else {
-					await sleep(.05);
+					await sleep(.25);
 				}
 
 			}
@@ -236,4 +211,4 @@ class timed_attack_feature extends feature_item {
 	}
 }
 
-export default new timed_attack();
+export default new train_troops();
