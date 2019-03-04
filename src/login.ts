@@ -180,7 +180,6 @@ async function login_to_gameworld(
 		logger.error('error login to gameworld. could you entered the wrong one?', 'login');
 		process.exit();
 	}
-	console.log(res)
 
 	let rv: any = parse_token(res.data);
 
@@ -203,7 +202,6 @@ async function login_to_gameworld(
 
 	// set gameworld cookies
 	let cookies_gameworld = parse_cookies(res.headers['set-cookie']);
-	console.log(cookies_gameworld)
 	axios.defaults.headers['Cookie'] += cookies_gameworld;
 
 	// get new sessionID
@@ -269,7 +267,6 @@ async function get_gameworld_id(axios: AxiosInstance, session: string, gameworld
 	};
 
 	const res: AxiosResponse = await axios.post(lobby_endpoint, payload);
-	console.log(res)
 
 	let gameworlds: any = clash_obj(res.data, 'cache', 'response');
 	gameworlds = gameworlds[0].data;
