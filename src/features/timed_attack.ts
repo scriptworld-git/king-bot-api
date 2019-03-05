@@ -190,29 +190,29 @@ class timed_attack_feature extends feature_item {
 		const attack_time = new Date(date + 'T' + time + 'Z');
 		const attack_time_ms = attack_time.getTime();
 
-		console.log(units)
-		var resp = await api.check_target(Number(sourceVillage_id), Number(target_villageId), 4)
+		console.log(units);
+		var resp = await api.check_target(Number(sourceVillage_id), Number(target_villageId), 4);
 		const check_target_data = resp.durations;
-		log(check_target_data)
+		log(check_target_data);
 		var duration = null;
 		for (var key in units) {
 			if (units.hasOwnProperty(key)) {
 				if (units[key] > 0 && Number(troops[own_tribe][key].speed) < speed) {
 					duration = check_target_data[key];
 					duration = duration * 1000; //to ms
-					speed = Number(troops[own_tribe][key].speed)
-					console.log("done")
+					speed = Number(troops[own_tribe][key].speed);
+					console.log('done');
 				}
 			}
 		}
-		console.log(duration)
+		console.log(duration);
 		while (this.options.run) {
 			this.set_options(this.options);
 			var currentTime_ms = Date.now();
 
 			if (attack_time_ms - duration < currentTime_ms + 2000) {
 				if (attack_time_ms - duration < currentTime_ms + 0) {
-					log('testing')
+					log('testing');
 					log(`attacking: ${village_name} -> ${target_village_name}`);
 					await api.send_units(sourceVillage_id, target_villageId, units, 3);
 					this.running = false;
