@@ -105,14 +105,15 @@ class farm_feature extends feature_item {
 					const losses_list_obj = farming.find(losses_farmlist, response);
 					const losses_id = losses_list_obj.listId;
 					await clean_farmlist(list_obj.listId, losses_id);
-
 				}
+
 				if (!farmlists_to_send[village_id]) {
 					farmlists_to_send[village_id] = [];
 				}
-				farmlists_to_send[village_id].push(list_obj.listId); // No cleaning was desired so just add the list.
 
+				farmlists_to_send[village_id].push(list_obj.listId); // No cleaning was desired so just add the list.
 			}
+
 			for (var village_id in farmlists_to_send) {
 				if (farmlists_to_send.hasOwnProperty(village_id)) {
 					var farmlist_ids = farmlists_to_send[village_id];
@@ -121,6 +122,7 @@ class farm_feature extends feature_item {
 					await sleep(get_random_int(.75, 1.25));
 				}
 			}
+
 			log('farmlists sent');
 
 			await sleep(get_random_int(interval_min, interval_max));
