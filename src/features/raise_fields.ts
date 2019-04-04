@@ -216,7 +216,6 @@ class raise extends feature_item {
 
 		while (this.options.run) {
 			let sleep_time: number = await this.upgrade_field();
-			logger.debug('return sleep time is ' + String(sleep_time));
 
 			// all fields are raised
 			if (!sleep_time) {
@@ -230,7 +229,6 @@ class raise extends feature_item {
 			if (!sleep_time || sleep_time <= 0) sleep_time = 60;
 			if (sleep_time > 300) sleep_time = 300;
 
-			logger.debug('actual sleep time is ' + String(sleep_time));
 			await sleep(sleep_time);
 		}
 
