@@ -177,7 +177,7 @@ async function login_to_gameworld(
 	try {
 		res = await axios.get(mellonURL);
 	} catch {
-		logger.error('error login to gameworld. could you entered the wrong one?', 'login');
+		logger.error('error login to gameworld. could you have entered the wrong one?', 'login');
 		process.exit();
 	}
 

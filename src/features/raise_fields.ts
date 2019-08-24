@@ -9,6 +9,7 @@ import finish_earlier from './finish_earlier';
 interface Ioptions_raise extends Ioptions {
 	[index: string]: any
 	village_name: string
+	village_id: number
 	crop: number
 	wood: number
 	clay: number
@@ -28,6 +29,7 @@ class raise_fields extends feature_collection {
 		return {
 			...options,
 			village_name: '',
+			village_id: 0,
 			crop: 0,
 			wood: 0,
 			iron: 0,
@@ -54,13 +56,14 @@ class raise extends feature_item {
 	options: Ioptions_raise;
 
 	set_options(options: Ioptions_raise): void {
-		const { uuid, run, error, village_name, crop, iron, wood, clay } = options;
+		const { uuid, run, error, village_name, village_id, crop, iron, wood, clay } = options;
 		this.options = {
 			...this.options,
 			uuid,
 			run,
 			error,
 			village_name,
+			village_id,
 			crop,
 			iron,
 			wood,
@@ -92,20 +95,20 @@ class raise extends feature_item {
 	}
 
 	async upgrade_field(): Promise<number> {
-		const { village_name } = this.options;
+		const { village_name, village_id } = this.options;
 
 		let params: string[] = [];
 		const villages_data: any = await village.get_own();
-		const village_obj: Ivillage = village.find(village_name, villages_data);
-		params.push(village.building_collection_ident + village_obj.villageId);
-		params.push(village.building_queue_ident + village_obj.villageId);
+		const village_obj: Ivillage = village.find(village_id, villages_data);
+		params.push(village.building_collection_ident + village_id);
+		params.push(village.building_queue_ident + village_id);
 
 		// fetch latest data needed
 		let response: any[] = await api.get_cache(params);
 
 		let sleep_time: number = null;
 
-		const queue_data: Ibuilding_queue = find_state_data(village.building_queue_ident + village_obj.villageId, response);
+		const queue_data: Ibuilding_queue = find_state_data(village.building_queue_ident + village_id, response);
 
 		// skip if resource slot is used
 		if (queue_data.freeSlots[2] == 0) {
@@ -128,7 +131,7 @@ class raise extends feature_item {
 		}
 
 		// village got free res slot
-		const village_data: Ibuilding_collection[] = find_state_data(village.building_collection_ident + village_obj.villageId, response);
+		const village_data: Ibuilding_collection[] = find_state_data(village.building_collection_ident + village_id, response);
 
 		// sort resource type by it's storage
 		const sorted_res_types: number[] = [];
@@ -189,14 +192,14 @@ class raise extends feature_item {
 
 		if (upgrade_building) {
 			// upgrade building
-			const res: any = await api.upgrade_building(upgrade_building.buildingType, upgrade_building.locationId, village_obj.villageId);
+			const res: any = await api.upgrade_building(upgrade_building.buildingType, upgrade_building.locationId, village_id);
 			logger.info('upgrade building ' + upgrade_building.locationId + ' on village ' + village_obj.name, 'raise fields');
 
 			const upgrade_time: number = Number(upgrade_building.upgradeTime);
 
 			// check if building time is less than 5 min
 			if (get_diff_time(upgrade_time) <= (5 * 60)) {
-				await api.finish_now(village_obj.villageId, 2);
+				await api.finish_now(village_id, 2);
 				logger.info('upgrade time less 5 min, instant finish!', 'raise fields');
 
 				// only wait one second to build next building
