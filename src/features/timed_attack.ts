@@ -11,6 +11,7 @@ import logger from '../logger';
 
 interface Ioptions_timed_attack extends Ioptions {
 	village_name: string,
+	village_id: number,
 	wait_time: number,
 	target_villageId: number,
 	target_village_name: string,
@@ -47,6 +48,7 @@ class timed_attack extends feature_collection {
 		return {
 			...options,
 			village_name: '',
+			village_id: 0,
 			wait_time: 60,
 			target_villageId: 0,
 			target_village_name: '',
@@ -77,6 +79,7 @@ class timed_attack_feature extends feature_item {
 
 	set_options(options: Ioptions_timed_attack): void {
 		const { uuid, run, error, village_name,
+			village_id,
 			wait_time,
 			target_villageId,
 			target_village_name,
@@ -105,6 +108,7 @@ class timed_attack_feature extends feature_item {
 			run,
 			error,
 			village_name,
+			village_id,
 			wait_time,
 			target_villageId,
 			target_village_name,
@@ -143,7 +147,7 @@ class timed_attack_feature extends feature_item {
 
 	get_description(): string {
 		const { village_name, target_village_name } = this.options;
-		return `${village_name} -> ${target_village_name} : ${this.options.wait_time}`;
+		return `${village_name} -> ${target_village_name} : ${this.options.time}`;
 	}
 
 	get_long_description(): string {
@@ -153,14 +157,12 @@ class timed_attack_feature extends feature_item {
 	async run(): Promise<void> {
 		log(`attack timer uuid: ${this.options.uuid} started`);
 
-		var { village_name, target_villageId, target_distance, target_village_name, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, send_hero, date, time } = this.options;
+		var { village_name, village_id, target_villageId, target_distance, target_village_name, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, send_hero, date, time } = this.options;
 		const params = [
 			village.own_villages_ident,
 		];
 
-		const response = await api.get_cache(params);
-		const vill: Ivillage = village.find(village_name, response);
-		const sourceVillage_id: number = vill.villageId;
+		const sourceVillage_id: number = village_id;
 		if (send_hero) {
 			t11 = 1;
 		}

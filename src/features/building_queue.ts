@@ -10,6 +10,7 @@ import { buildings } from '../data';
 
 interface Ioptions_queue extends Ioptions {
 	village_name: string
+	village_id: number
 	queue: Iqueue[]
 }
 
@@ -33,6 +34,7 @@ class building_queue extends feature_collection {
 		return {
 			...options,
 			village_name: '',
+			village_id: 0,
 			queue: []
 		};
 	}
@@ -42,13 +44,14 @@ class queue extends feature_item {
 	options: Ioptions_queue;
 
 	set_options(options: Ioptions_queue): void {
-		const { uuid, run, error, village_name, queue } = options;
+		const { uuid, run, error, village_name, village_id, queue } = options;
 		this.options = {
 			...this.options,
 			uuid,
 			run,
 			error,
 			village_name,
+			village_id,
 			queue: [ ...queue ]
 		};
 	}
@@ -82,7 +85,7 @@ class queue extends feature_item {
 		logger.info(`building queue: ${this.options.uuid} started`, 'building queue');
 
 		while (this.options.run) {
-			const { village_name, queue } = this.options;
+			const { village_name, village_id, queue } = this.options;
 			if (queue.length < 1) break;
 			const queue_item: Iqueue = queue[0];
 
@@ -90,16 +93,16 @@ class queue extends feature_item {
 
 			const villages_data: any = await village.get_own();
 
-			const village_obj: Ivillage = village.find(village_name, villages_data);
+			const village_obj: Ivillage = village.find(village_id, villages_data);
 
-			params.push(village.building_queue_ident + village_obj.villageId);
+			params.push(village.building_queue_ident + village_id);
 
 			// fetch latest data needed
 			let response: any[] = await api.get_cache(params);
 
 			let sleep_time: number = null;
 
-			const queue_data: Ibuilding_queue = find_state_data(village.building_queue_ident + village_obj.villageId, response);
+			const queue_data: Ibuilding_queue = find_state_data(village.building_queue_ident + village_id, response);
 
 			let free: boolean = true;
 
@@ -128,8 +131,8 @@ class queue extends feature_item {
 			if (free) {
 				// upgrade building here
 				if (this.able_to_build(queue_item.costs, village_obj)) {
-					const res: any = await api.upgrade_building(queue_item.type, queue_item.location, village_obj.villageId);
-					logger.info('upgrade building ' + queue_item.location + ' on village ' + village_obj.name, 'building queue');
+					const res: any = await api.upgrade_building(queue_item.type, queue_item.location, village_id);
+					logger.info('upgrade building ' + queue_item.location + ' on village ' + village_name, 'building queue');
 
 					// TODO save new options to database
 					this.options.queue.shift();
@@ -137,7 +140,7 @@ class queue extends feature_item {
 					const upgrade_time: number = Number(queue_item.upgrade_time);
 
 					if (get_diff_time(upgrade_time) <= (5 * 60)) {
-						await api.finish_now(village_obj.villageId, 2);
+						await api.finish_now(village_id, 2);
 						logger.info('upgrade time less 5 min, instant finish!', 'building queue');
 
 						// only wait one second to build next building

@@ -90,8 +90,7 @@ class farm_feature extends feature_item {
 
 			for (let farmlistinfo of farmlists) {
 				const list_obj = farming.find(farmlistinfo.farmlist, response);
-				const vill: Ivillage = village.find(farmlistinfo.village_name, response);
-				const village_id: number = vill.villageId;
+				const village_id: number = farmlistinfo.villageId;
 
 				const lastSent: number = Number(list_obj.lastSent);
 				const now: number = get_date();
