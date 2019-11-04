@@ -8,10 +8,10 @@ import uniqid from 'uniqid';
 import { clean_farmlist } from '../utilities/clean_farmlist';
 
 interface Ioptions_farm extends Ioptions {
-	farmlists: any[]
-	losses_farmlist: string
-	interval_min: number
-	interval_max: number
+	farmlists: any[];
+	losses_farmlist: string;
+	interval_min: number;
+	interval_max: number;
 }
 
 class send_farmlist extends feature_collection {
@@ -29,7 +29,7 @@ class send_farmlist extends feature_collection {
 			farmlists: [],
 			interval_min: 0,
 			interval_max: 0,
-			losses_farmlist: ''
+			losses_farmlist: '',
 		};
 	}
 }
@@ -47,7 +47,7 @@ class farm_feature extends feature_item {
 			farmlists,
 			interval_min,
 			interval_max,
-			losses_farmlist
+			losses_farmlist,
 		};
 	}
 
@@ -58,7 +58,7 @@ class farm_feature extends feature_item {
 	set_params(): void {
 		this.params = {
 			ident: 'farming',
-			name: 'send farmlist'
+			name: 'send farmlist',
 		};
 	}
 
@@ -76,7 +76,7 @@ class farm_feature extends feature_item {
 
 		const params = [
 			village.own_villages_ident,
-			farming.farmlist_ident
+			farming.farmlist_ident,
 		];
 
 		// fetch farmlists
@@ -90,7 +90,7 @@ class farm_feature extends feature_item {
 
 			for (let farmlistinfo of farmlists) {
 				const list_obj = farming.find(farmlistinfo.farmlist, response);
-				const village_id: number = farmlistinfo.villageId;
+				const village_id: number = farmlistinfo.village_id;
 
 				const lastSent: number = Number(list_obj.lastSent);
 				const now: number = get_date();
