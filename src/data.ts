@@ -60,7 +60,7 @@ export const troops: any = {
 	// roman units
 	1: {
 		1: {
-			name: 'Legionnaire',
+			name: 'Legionnaire',			
 			attack: 40,
 			speed: 6,
 			infantry_defense: 35,

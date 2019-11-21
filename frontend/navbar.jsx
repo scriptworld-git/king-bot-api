@@ -111,6 +111,9 @@ export default class NavBar extends Component {
 									<a className="navbar-item" onClick={ e => this.get_new('timed_attack') }>
 										timed attack
 									</a>
+									<a className="navbar-item" onClick={ e => this.get_new('recruit_units') }>
+										Recruit Units
+									</a>
 								</div>
 							</div>
 

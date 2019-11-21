@@ -184,6 +184,68 @@ class api {
 		return await this.post('dialogAction', 'quest', params);
 	}
 
+	async start_recruitUnitsBarracks(villageidget: number, locationidget: number, unitget: number, amountget: number): Promise<any> {
+		if (unitget === 21) {
+			const params = {
+				villageidget,
+				locationidget,
+				units: {"21": amountget}
+			};
+
+			return await this.post('recruitUnits', 'building', params);
+
+			} else if (unitget === 22) {
+				const params = {
+					villageidget,
+					locationidget,
+					units: {"22": amountget}
+				};
+				
+				return await this.post('recruitUnits', 'building', params);
+
+			} else {
+
+				log('This Units not suppor api: ' + unitget);
+
+			};
+
+	};
+
+	async start_recruitUnitsStable(villageidget: number,locationidget: number,unitget: number,amountget: number): Promise<any> {
+
+		  if (unitget === 23) {
+					const params = {
+						villageidget,
+						locationidget,
+						units: {"23": amountget}
+					};
+					return await this.post('recruitUnits', 'building', params);
+			} else if (unitget === 24) {
+					const params = {
+						villageidget,
+						locationidget,
+						units: {"24": amountget}
+					};
+					return await this.post('recruitUnits', 'building', params);
+			} else if (unitget === 25) {
+					const params = {
+						villageidget,
+						locationidget,
+						units: {"25": amountget}
+					};
+					return await this.post('recruitUnits', 'building', params);
+			} else if (unitget === 26) {
+					const params = {
+						villageidget,
+						locationidget,
+						units: {"26": amountget}
+					};
+					return await this.post('recruitUnits', 'building', params);
+			} else {
+				log('This Units not supported api: ' + unitget);
+			}
+
+		}
 	async post(action: string, controller: string, params: object): Promise<any> {
 		const session = this.session;
 
