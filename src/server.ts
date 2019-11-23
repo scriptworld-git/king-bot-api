@@ -12,7 +12,7 @@ import { find_state_data } from './util';
 import {
 	raise_fields, building_queue,
 	finish_earlier, auto_adventure, send_farmlist,
-	trade_route, timed_attack
+	trade_route, timed_attack, recruit_units
 } from './features';
 import { farming, village, player } from './gamedata';
 
@@ -26,7 +26,8 @@ class server {
 		building_queue,
 		raise_fields,
 		trade_route,
-		timed_attack
+		timed_attack,
+		recruit_units
 	];
 
 	constructor() {
@@ -87,9 +88,11 @@ class server {
 			}
 
 			if (ident == 'buildings') {
-				const { village_id } = req.query;
+				const { village_name } = req.query;
+				const village_data = await village.get_own();
+				const village_obj: Ivillage = village.find(village_name, village_data);
 
-				const queue_ident: string = village.building_collection_ident + village_id;
+				const queue_ident: string = village.building_collection_ident + village_obj.villageId;
 
 				const response: any[] = await api.get_cache([queue_ident]);
 
@@ -110,9 +113,9 @@ class server {
 			}
 
 			if (ident == 'village') {
-				const { village_id } = req.query;
+				const { village_name } = req.query;
 				const village_data = await village.get_own();
-				const village_obj: Ivillage = village.find(village_id, village_data);
+				const village_obj: Ivillage = village.find(village_name, village_data);
 
 				res.send(village_obj);
 
@@ -159,9 +162,9 @@ class server {
 		});
 
 		this.app.post('/api/easyscout', (req: any, res: any) => {
-			const { village_id, list_name, amount, mission } = req.body;
+			const { village_name, list_name, amount, mission } = req.body;
 
-			kingbot.scout(list_name, village_id, amount, mission);
+			kingbot.scout(list_name, village_name, amount, mission);
 
 			res.send('success');
 		});
@@ -185,7 +188,6 @@ class server {
 					min_village_pop,
 					max_village_pop,
 					village_name,
-					village_id,
 					inactive_for,
 					min_distance,
 					max_distance
@@ -194,7 +196,7 @@ class server {
 				const response = await inactive_finder.get_new_farms(
 					min_player_pop, max_player_pop,
 					min_village_pop, max_village_pop,
-					village_name, village_id, inactive_for,
+					village_name, inactive_for,
 					min_distance, max_distance
 				);
 
