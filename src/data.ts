@@ -60,7 +60,8 @@ export const troops: any = {
 	// roman units
 	1: {
 		1: {
-			name: 'Legionnaire',			
+			name: 'Legionnaire',
+			id: '1',
 			attack: 40,
 			speed: 6,
 			infantry_defense: 35,
@@ -70,6 +71,7 @@ export const troops: any = {
 		},
 		2: {
 			name: 'Praetorian',
+			id: '2',
 			attack: 30,
 			speed: 5,
 			infantry_defense: 65,
@@ -79,6 +81,7 @@ export const troops: any = {
 		},
 		3: {
 			name: 'Imperian',
+			id: '3',
 			attack: 70,
 			speed: 7,
 			infantry_defense: 40,
@@ -88,6 +91,7 @@ export const troops: any = {
 		},
 		4: {
 			name: 'Equites Legati',
+			id: '4',
 			attack: 0,
 			speed: 16,
 			infantry_defense: 20,
@@ -97,6 +101,7 @@ export const troops: any = {
 		},
 		5: {
 			name: 'Equites Imperatoris',
+			id: '5',
 			attack: 120,
 			speed: 14,
 			infantry_defense: 65,
@@ -106,6 +111,7 @@ export const troops: any = {
 		},
 		6: {
 			name: 'Equites Caesaris',
+			id: '6',
 			attack: 180,
 			speed: 10,
 			infantry_defense: 80,
@@ -115,6 +121,7 @@ export const troops: any = {
 		},
 		7: {
 			name: 'Battering Ram',
+			id: '7',
 			attack: 60,
 			speed: 4,
 			infantry_defense: 30,
@@ -124,6 +131,7 @@ export const troops: any = {
 		},
 		8: {
 			name: 'Fire Catapult',
+			id: '8',
 			attack: 75,
 			speed: 3,
 			infantry_defense: 60,
@@ -133,6 +141,7 @@ export const troops: any = {
 		},
 		9: {
 			name: 'Senator',
+			id: '9',
 			attack: 50,
 			speed: 4,
 			infantry_defense: 40,
@@ -142,6 +151,7 @@ export const troops: any = {
 		},
 		10: {
 			name: 'Settler',
+			id: '10',
 			attack: 0,
 			speed: 5,
 			infantry_defense: 80,
@@ -154,6 +164,7 @@ export const troops: any = {
 	2: {
 		1: {
 			name: 'Clubswinger',
+			id: '11',
 			attack: 40,
 			speed: 7,
 			infantry_defense: 20,
@@ -163,6 +174,7 @@ export const troops: any = {
 		},
 		2: {
 			name: 'Spearfighter',
+			id: '12',
 			attack: 10,
 			speed: 7,
 			infantry_defense: 35,
@@ -172,6 +184,7 @@ export const troops: any = {
 		},
 		3: {
 			name: 'Axefighter',
+			id: '13',
 			attack: 60,
 			speed: 7,
 			infantry_defense: 30,
@@ -181,6 +194,7 @@ export const troops: any = {
 		},
 		4: {
 			name: 'Scout',
+			id: '14',
 			attack: 0,
 			speed: 10,
 			infantry_defense: 10,
@@ -190,6 +204,7 @@ export const troops: any = {
 		},
 		5: {
 			name: 'Paladin',
+			id: '15',
 			attack: 55,
 			speed: 10,
 			infantry_defense: 100,
@@ -199,6 +214,7 @@ export const troops: any = {
 		},
 		6: {
 			name: 'Teutonic Knight',
+			id: '16',
 			attack: 150,
 			speed: 9,
 			infantry_defense: 50,
@@ -208,6 +224,7 @@ export const troops: any = {
 		},
 		7: {
 			name: 'Ram',
+			id: '17',
 			attack: 65,
 			speed: 4,
 			infantry_defense: 30,
@@ -217,6 +234,7 @@ export const troops: any = {
 		},
 		8: {
 			name: 'Catapult',
+			id: '18',
 			attack: 50,
 			speed: 3,
 			infantry_defense: 60,
@@ -226,6 +244,7 @@ export const troops: any = {
 		},
 		9: {
 			name: 'Chief',
+			id: '19',
 			attack: 40,
 			speed: 4,
 			infantry_defense: 60,
@@ -235,6 +254,7 @@ export const troops: any = {
 		},
 		10: {
 			name: 'Settler',
+			id: '20',
 			attack: 0,
 			speed: 5,
 			infantry_defense: 80,
@@ -247,6 +267,7 @@ export const troops: any = {
 	3: {
 		1: {
 			name: 'Phalanx',
+			id: '21',
 			attack: 15,
 			speed: 7,
 			infantry_defense: 40,
@@ -256,6 +277,7 @@ export const troops: any = {
 		},
 		2: {
 			name: 'Swordsman',
+			id: '22',
 			attack: 65,
 			speed: 6,
 			infantry_defense: 35,
@@ -265,6 +287,7 @@ export const troops: any = {
 		},
 		3: {
 			name: 'Pathfinder',
+			id: '23',
 			attack: 0,
 			speed: 17,
 			infantry_defense: 20,
@@ -274,6 +297,7 @@ export const troops: any = {
 		},
 		4: {
 			name: 'Theutates Thunder',
+			id: '24',
 			attack: 90,
 			speed: 19,
 			infantry_defense: 25,
@@ -283,6 +307,7 @@ export const troops: any = {
 		},
 		5: {
 			name: 'Druidrider',
+			id: '25',
 			attack: 45,
 			speed: 16,
 			infantry_defense: 115,
@@ -292,6 +317,7 @@ export const troops: any = {
 		},
 		6: {
 			name: 'Haeduan',
+			id: '26',
 			attack: 140,
 			speed: 13,
 			infantry_defense: 60,
@@ -301,6 +327,7 @@ export const troops: any = {
 		},
 		7: {
 			name: 'Ram',
+			id: '27',
 			attack: 50,
 			speed: 4,
 			infantry_defense: 30,
@@ -319,6 +346,7 @@ export const troops: any = {
 		},
 		9: {
 			name: 'Chieftain',
+			id: '29',
 			attack: 40,
 			speed: 5,
 			infantry_defense: 50,
@@ -328,6 +356,7 @@ export const troops: any = {
 		},
 		10: {
 			name: 'Settler',
+			id: '30',
 			attack: 0,
 			speed: 5,
 			infantry_defense: 80,
