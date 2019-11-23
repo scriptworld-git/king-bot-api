@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+ import axios, { AxiosInstance } from 'axios';
 import { clash_obj, get_date, log } from './util';
 import manage_login from './login';
 import settings from './settings';
@@ -184,68 +184,26 @@ class api {
 		return await this.post('dialogAction', 'quest', params);
 	}
 
-	async start_recruitUnitsBarracks(villageidget: number, locationidget: number, unitget: number, amountget: number): Promise<any> {
-		if (unitget === 21) {
-			const params = {
-				villageidget,
-				locationidget,
-				units: {"21": amountget}
-			};
+	async start_recruitUnitsBarracks(villageId: number, locationId: number, unitget: number, amountget: number): Promise<any> {
 
-			return await this.post('recruitUnits', 'building', params);
+        const params = {
+            villageId,
+            locationId,
+            units: { [unitget]: amountget}
+            };
+            return await this.post('recruitUnits', 'building', params);
+    }
+	
+	async start_recruitUnitsStable(villageId: number,locationId: number,unitget: number,amountget: number): Promise<any> {
 
-			} else if (unitget === 22) {
-				const params = {
-					villageidget,
-					locationidget,
-					units: {"22": amountget}
-				};
-				
-				return await this.post('recruitUnits', 'building', params);
-
-			} else {
-
-				log('This Units not suppor api: ' + unitget);
-
-			};
-
-	};
-
-	async start_recruitUnitsStable(villageidget: number,locationidget: number,unitget: number,amountget: number): Promise<any> {
-
-		  if (unitget === 23) {
-					const params = {
-						villageidget,
-						locationidget,
-						units: {"23": amountget}
-					};
-					return await this.post('recruitUnits', 'building', params);
-			} else if (unitget === 24) {
-					const params = {
-						villageidget,
-						locationidget,
-						units: {"24": amountget}
-					};
-					return await this.post('recruitUnits', 'building', params);
-			} else if (unitget === 25) {
-					const params = {
-						villageidget,
-						locationidget,
-						units: {"25": amountget}
-					};
-					return await this.post('recruitUnits', 'building', params);
-			} else if (unitget === 26) {
-					const params = {
-						villageidget,
-						locationidget,
-						units: {"26": amountget}
-					};
-					return await this.post('recruitUnits', 'building', params);
-			} else {
-				log('This Units not supported api: ' + unitget);
-			}
-
-		}
+        const params = {
+            villageId,
+            locationId,
+            units: { [unitget]: amountget}
+            };
+            return await this.post('recruitUnits', 'building', params);
+    }
+		
 	async post(action: string, controller: string, params: object): Promise<any> {
 		const session = this.session;
 
@@ -255,13 +213,12 @@ class api {
 			params,
 			session
 		};
-
+			
 		const response: any = await this.ax.post(`/?t${get_date()}`, payload);
 
 		if (response.errors) {
 			log(response.errors);
 		}
-
 		return this.merge_data(response.data);
 	}
 

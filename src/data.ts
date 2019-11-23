@@ -67,7 +67,7 @@ export const troops: any = {
 			infantry_defense: 35,
 			calvary_defense: 50,
 			carry_capacity: 50,
-			costs: [ 75, 50, 100, 0	]
+			costsW: 75,	costsC: 50,	costsI: 100
 		},
 		2: {
 			name: 'Praetorian',
@@ -77,7 +77,7 @@ export const troops: any = {
 			infantry_defense: 65,
 			calvary_defense: 35,
 			carry_capacity: 20,
-			costs: [ 80, 100, 160, 0 ]
+			costsW: 80, costsC: 100, costsI: 160
 		},
 		3: {
 			name: 'Imperian',
@@ -87,7 +87,7 @@ export const troops: any = {
 			infantry_defense: 40,
 			calvary_defense: 25,
 			carry_capacity: 50,
-			costs: [ 100, 110, 140, 0 ]
+			costsW: 100, costsC: 110, costsI:140
 		},
 		4: {
 			name: 'Equites Legati',
@@ -97,7 +97,7 @@ export const troops: any = {
 			infantry_defense: 20,
 			calvary_defense: 10,
 			carry_capacity: 0,
-			costs: [ 100, 140, 10, 0 ]
+			costsW: 100, costsC: 140, costsI:10
 		},
 		5: {
 			name: 'Equites Imperatoris',
@@ -107,7 +107,7 @@ export const troops: any = {
 			infantry_defense: 65,
 			calvary_defense: 50,
 			carry_capacity: 100,
-			costs: [ 350, 260, 180,	0 ]
+			costsW: 350, costsC: 260, costsI:180
 		},
 		6: {
 			name: 'Equites Caesaris',
@@ -117,7 +117,7 @@ export const troops: any = {
 			infantry_defense: 80,
 			calvary_defense: 105,
 			carry_capacity: 70,
-			costs: [ 280, 340, 600, 0 ]
+			costsW: 280, costsC: 340, costsI:600
 		},
 		7: {
 			name: 'Battering Ram',
@@ -127,7 +127,7 @@ export const troops: any = {
 			infantry_defense: 30,
 			calvary_defense: 75,
 			carry_capacity: 0,
-			costs: [ 700, 180, 400,	0 ]
+			costsW: 700, costsC: 180, costsI:400
 		},
 		8: {
 			name: 'Fire Catapult',
@@ -137,7 +137,7 @@ export const troops: any = {
 			infantry_defense: 60,
 			calvary_defense: 10,
 			carry_capacity: 0,
-			costs: [ 690, 1000, 400, 0 ]
+			costsW: 690, costsC: 1000, costsI:400
 		},
 		9: {
 			name: 'Senator',
@@ -147,7 +147,7 @@ export const troops: any = {
 			infantry_defense: 40,
 			calvary_defense: 30,
 			carry_capacity: 0,
-			costs: [ 30750,	27200, 45000, 0 ]
+			costsW: 30750,	costsC: 27200, costsI:45000
 		},
 		10: {
 			name: 'Settler',
@@ -157,7 +157,7 @@ export const troops: any = {
 			infantry_defense: 80,
 			calvary_defense: 80,
 			carry_capacity: 3000,
-			costs: [ 3500, 3000, 4500, 0 ]
+			costsW: 3500, costsC: 3000, costsI:4500
 		},
 	},
 	// teuton units
@@ -170,7 +170,7 @@ export const troops: any = {
 			infantry_defense: 20,
 			calvary_defense: 5,
 			carry_capacity: 60,
-			costs: [ 85, 65, 30, 0 ]
+			costsW: 85, costsC: 65, costsI:30
 		},
 		2: {
 			name: 'Spearfighter',
@@ -180,7 +180,7 @@ export const troops: any = {
 			infantry_defense: 35,
 			calvary_defense: 60,
 			carry_capacity: 40,
-			costs: [ 125, 50, 65, 0 ]
+			costsW: 125, costsC: 50, costsI:65
 		},
 		3: {
 			name: 'Axefighter',
@@ -190,7 +190,7 @@ export const troops: any = {
 			infantry_defense: 30,
 			calvary_defense: 30,
 			carry_capacity: 50,
-			costs: [ 80, 65, 130, 0 ]
+			costsW: 80, costsC: 65, costsI:130
 		},
 		4: {
 			name: 'Scout',
@@ -200,7 +200,7 @@ export const troops: any = {
 			infantry_defense: 10,
 			calvary_defense: 5,
 			carry_capacity: 0,
-			costs: [ 140, 80, 30, 0 ]
+			costsW: 140, costsC: 80, costsI:30
 		},
 		5: {
 			name: 'Paladin',
@@ -210,7 +210,7 @@ export const troops: any = {
 			infantry_defense: 100,
 			calvary_defense: 40,
 			carry_capacity: 110,
-			costs: [ 330, 170, 200,	0 ]
+			costsW: 330, costsC: 170, costsI:200
 		},
 		6: {
 			name: 'Teutonic Knight',
@@ -220,7 +220,7 @@ export const troops: any = {
 			infantry_defense: 50,
 			calvary_defense: 75,
 			carry_capacity: 80,
-			costs: [ 350, 400, 320,	0 ]
+			costsW: 350, costsC: 400, costsI:320
 		},
 		7: {
 			name: 'Ram',
@@ -230,7 +230,7 @@ export const troops: any = {
 			infantry_defense: 30,
 			calvary_defense: 80,
 			carry_capacity: 0,
-			costs: [ 800, 150, 250, 0 ]
+			costsW: 800, costsC: 150, costsI:250
 		},
 		8: {
 			name: 'Catapult',
@@ -240,7 +240,7 @@ export const troops: any = {
 			infantry_defense: 60,
 			calvary_defense: 10,
 			carry_capacity: 0,
-			costs: [ 660, 900, 370, 0 ]
+			costsW: 660, costsC: 900, costsI:370
 		},
 		9: {
 			name: 'Chief',
@@ -250,7 +250,7 @@ export const troops: any = {
 			infantry_defense: 60,
 			calvary_defense: 40,
 			carry_capacity: 0,
-			costs: [ 35500, 26600, 25000, 0	]
+			costsW: 35500, costsC: 26600, costsI:25000
 		},
 		10: {
 			name: 'Settler',
@@ -260,7 +260,7 @@ export const troops: any = {
 			infantry_defense: 80,
 			calvary_defense: 80,
 			carry_capacity: 3000,
-			costs: [ 4000, 3500, 3200, 0 ]
+			costsW: 4000, costsC: 3500, costsI:3200
 		}
 	},
 	// gaul units
@@ -273,7 +273,7 @@ export const troops: any = {
 			infantry_defense: 40,
 			calvary_defense: 50,
 			carry_capacity: 35,
-			costs: [ 85, 100, 50, 0	]
+			costsW: 85, costsC: 100, costsI:50
 		},
 		2: {
 			name: 'Swordsman',
@@ -283,7 +283,7 @@ export const troops: any = {
 			infantry_defense: 35,
 			calvary_defense: 20,
 			carry_capacity: 45,
-			costs: [ 95, 60, 140, 0 ]
+			costsW: 95, costsC: 60, costsI:140
 		},
 		3: {
 			name: 'Pathfinder',
@@ -293,7 +293,7 @@ export const troops: any = {
 			infantry_defense: 20,
 			calvary_defense: 10,
 			carry_capacity: 0,
-			costs: [ 140, 110, 20, 0 ]
+			costsW: 140, costsC: 110, costsI:20
 		},
 		4: {
 			name: 'Theutates Thunder',
@@ -303,7 +303,7 @@ export const troops: any = {
 			infantry_defense: 25,
 			calvary_defense: 40,
 			carry_capacity: 75,
-			costs: [ 200, 280, 130, 0 ]
+			costsW: 200, costsC: 280, costsI:130
 		},
 		5: {
 			name: 'Druidrider',
@@ -313,7 +313,7 @@ export const troops: any = {
 			infantry_defense: 115,
 			calvary_defense: 55,
 			carry_capacity: 35,
-			costs: [ 300, 270, 190, 0 ]
+			costsW: 300, costsC: 270, costsI:190
 		},
 		6: {
 			name: 'Haeduan',
@@ -323,7 +323,7 @@ export const troops: any = {
 			infantry_defense: 60,
 			calvary_defense: 165,
 			carry_capacity: 65,
-			costs: [ 300, 380, 440, 0 ]
+			costsW: 300, costsC: 380, costsI:440
 		},
 		7: {
 			name: 'Ram',
@@ -333,7 +333,7 @@ export const troops: any = {
 			infantry_defense: 30,
 			calvary_defense: 105,
 			carry_capacity: 0,
-			costs: [ 750, 370, 220, 0 ]
+			costsW: 750, costsC: 370, costsI:220
 		},
 		8: {
 			name: 'Trebuchet',
@@ -343,7 +343,7 @@ export const troops: any = {
 			infantry_defense: 45,
 			calvary_defense: 10,
 			carry_capacity: 0,
-			costs: [ 590, 1200, 400, 0 ]
+			costsW: 590, costsC: 1200, costsI:400
 		},
 		9: {
 			name: 'Chieftain',
@@ -353,7 +353,7 @@ export const troops: any = {
 			infantry_defense: 50,
 			calvary_defense: 50,
 			carry_capacity: 0,
-			costs: [ 30750,	45400, 31000, 0 ]
+			costsW: 30750,	costsC: 45400, costsI:31000
 		},
 		10: {
 			name: 'Settler',
@@ -363,7 +363,7 @@ export const troops: any = {
 			infantry_defense: 80,
 			calvary_defense: 80,
 			carry_capacity: 3000,
-			costs: [ 3000, 4000, 3000, 0 ]
+			costsW: 3000, costsC: 4000, costsI:3000
 		}
 	}
 };
