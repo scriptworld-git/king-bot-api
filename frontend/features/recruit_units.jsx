@@ -1,12 +1,11 @@
-
 import { h, render, Component } from 'preact';
 import { route } from 'preact-router';
 import axios from 'axios';
 import classNames from 'classnames';
 
 export default class RecruitUnits extends Component {
-	state = {
-		name: 'Recruit Units',
+  state = {
+  	name: 'Recruit Units',
 		own_tribe: 0,
 		village_name: '',
 		wait_time: '',
@@ -132,20 +131,19 @@ export default class RecruitUnits extends Component {
 		} = this.state;
 
 		var new_rows = [];
-		if (own_tribe != 0 && troops != '') {
 			new_rows = [
-				<th style={ row_style }> {troops[own_tribe][1].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][2].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][3].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][4].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][5].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][6].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][7].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][8].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][9].name} </th>,
-				<th style={ row_style }> {troops[own_tribe][10].name} </th>,
+				<th style={ row_style }>Lo-Barracks-ID</th>,
+				<th style={ row_style }>Units</th>,
+				<th style={ row_style }>Amount</th>,
+				<th style={ row_style }>on/off</th>,
+				<th style={ row_style }>Lo-Stable-ID</th>,
+				<th style={ row_style }>Units</th>,
+				<th style={ row_style }>Amount</th>,
+				<th style={ row_style }>on/off</th>,
+				<th style={ row_style }>SleepTime</th>,
+				<th style={ row_style }>Empty</th>,
 			];
-		}
+		
 
 
 		if (date == '') {
@@ -184,47 +182,9 @@ export default class RecruitUnits extends Component {
 				<div className="columns">
 
 					<div className="column">
-						<div>
-							<label class="label">Target Land Time: UTC</label>
-							<input type="date" id="start" name="trip-start"
-								value={ date } onChange={ (e) => this.setState({ date: e.target.value }) }
-							></input>
-							<input type="time" id="meeting-time" step="1"
-								name="meeting-time" value={ time } onChange={ (e) => this.setState({ time: e.target.value }) }
-							/>
-						</div>
-						<div>
-							<label class="label">x</label>
-							<input
-								style="width: 150px;"
-								type="text"
-								value={ target_x }
-								placeholder="0"
-								onChange={ (e) => this.setState({ target_x: e.target.value }) }
-							/>
-							<label class="label">y</label>
-							<input
-								style="width: 150px;"
-								type="text"
-								value={ target_y }
-								placeholder="0"
-								onChange={ (e) => this.setState({ target_y: e.target.value }) }
-							/>
-
-							<label class="label">send hero</label>
-							<input type="checkbox" value={ send_hero } onChange={ (e) => this.setState({ send_hero: e.target.checked }) } />
-						</div>
-
-						<button className='button is-radiusless is-success' style='margin-top: 1rem' onClick={ this.setTarget }>
-							set target
-						</button>
-
-					</div>
-
-					<div className="column">
 
 						<div class="field">
-							<label class="label">select village</label>
+							<label class="label">Select Village</label>
 							<div class="control">
 								<div class={ village_select_class }>
 									<select
@@ -247,24 +207,16 @@ export default class RecruitUnits extends Component {
 					<table className="table is-hoverable is-fullwidth">
 						<thead>
 							<tr>
-								<th style={ row_style }>distance</th>
-								<th style={ row_style }>player</th>
-								<th style={ row_style }>village</th>
-								{new_rows}
+							<th>Barrack</th>
 							</tr>
-						</thead>
-						<tbody>
 							<tr>
-								<td style={ row_style }>
-									{target_distance}
-								</td>
-								<td style={ row_style }>
-									{target_player_name}
-								</td>
-								<td style={ row_style }>
-									{target_village_name}
-								</td>
-								<td style={ row_style }>
+								<th style={ row_style }>Locat-ID</th>
+								<th style={ row_style }>Units</th>
+								<th style={ row_style }>Amount</th>
+								<th style={ row_style }>on/off</th>
+							</tr>
+							<tr>
+  							<td style={ row_style }>
 									<input
 										style="width: 30px;"
 										type="text"
@@ -308,8 +260,19 @@ export default class RecruitUnits extends Component {
 										} }
 									/>
 								</td>
+							</tr>	
+								<tr>
+								<th>Stable</th>
+								</tr>
+								<tr>
+								<th style={ row_style }>Locat-ID</th>
+								<th style={ row_style }>Units</th>
+								<th style={ row_style }>Amount</th>
+								<th style={ row_style }>on/off</th>
+								</tr>
+							<tr>
 								<td style={ row_style }>
-									<input
+  								<input
 										style="width: 30px;"
 										type="text"
 										value={ t5 }
@@ -352,6 +315,12 @@ export default class RecruitUnits extends Component {
 										} }
 									/>
 								</td>
+							</tr>
+							
+								<tr>
+								<th style={ row_style }>SleepTime</th>
+								</tr>
+							<tr>	
 								<td style={ row_style }>
 									<input
 										style="width: 30px;"
@@ -363,19 +332,8 @@ export default class RecruitUnits extends Component {
 										} }
 									/>
 								</td>
-								<td style={ row_style }>
-									<input
-										style="width: 30px;"
-										type="text"
-										value={ t10 }
-										placeholder="t10"
-										onChange={ async e => {
-											this.setState({ t10: e.target.value });
-										} }
-									/>
-								</td>
-							</tr>
-						</tbody>
+							</tr>	
+						</thead>
 					</table>
 				</div>
 
