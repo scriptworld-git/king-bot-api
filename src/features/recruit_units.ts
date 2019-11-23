@@ -177,111 +177,77 @@ class recruit_units_feature extends feature_item {
 			const UnitssOnOff = units[4];
 			const UnitssStableOnOff = units[8];
 
-      let response = await api.get_cache(params);
-      const vill = village.find(village_name, response);
-      const sourceVillage_id = vill.villageId;
+			let response = await api.get_cache(params);
+			const vill = village.find(village_name, response);
+			const sourceVillage_id = vill.villageId;
 			const player_data: Iplayer = await player.get();
 			const own_tribe: tribe = player_data.tribeId;
 
 			let sleep_time: number = null;
 			sleep_time = units[9]*60;
 			log(`RecruitUnits ${this.options.village_name} Let sleeps ${sleep_time}`);
-      await sleep(sleep_time);
-			// this next features
-			/*var costUnits1 = troops[own_tribe][Unitss].costs*Amount;
-			var costUnitssStable1 = troops[own_tribe][UnitssStable].costs*AmountStable;
-			var Unit_name = troops[own_tribe][Unitss].name;
-			var Unit2_name = troops[own_tribe][UnitssStable].name;
-			log(`Recruit Units:> ${Unit_name} cost  ${costUnits1} Stable:>${Unit2_name} cost  ${costUnitssStable1}`);
-			*/
-			var costUnits = [0, 0, 0, 0, 0];
-			var costUnitssStable = [0, 0, 0, 0, 0];
-
+			await sleep(sleep_time);
+            // this next features
+			
+			//Barrack
+			var costUnits1 = [0, 0, 0];
+			var costUnitssStable1 = [0, 0, 0];
 			if (UnitssOnOff > 0) {
-				if (Unitss == 21) {
-				//21: phalanx
-								costUnits[1] = 85*Amount;
-                costUnits[2] = 100*Amount;
-                costUnits[3] = 50*Amount;
-                costUnits[4] = 0;
-				}
-				if (Unitss == 22) {
-				//22: swordsm
-								costUnits[1] = 95*Amount;
-                costUnits[2] = 60*Amount;
-                costUnits[3] = 140*Amount;
-                costUnits[4] = 0;
-				}
-			}
+				var Unit_name = troops[own_tribe][Unitss].name;
+				var Unit_ID = troops[own_tribe][Unitss].id;
+				
+				costUnits1[0] = troops[own_tribe][Unitss].costsW*Amount;
+				costUnits1[1] = troops[own_tribe][Unitss].costsC*Amount;
+				costUnits1[2] = troops[own_tribe][Unitss].costsI*Amount;				
+			};
+			
+			//Stable
 			if (UnitssStableOnOff > 0) {
-				if (UnitssStable == 23) {
-				//23: pathfin
-								costUnitssStable[1] = 140*AmountStable;
-                costUnitssStable[2] = 110*AmountStable;
-                costUnitssStable[3] = 20*AmountStable;
-                costUnitssStable[4] = 0;
-				}
-				if (UnitssStable == 24) {
-				//24: theutat
-								costUnitssStable[1] = 200*AmountStable;
-                costUnitssStable[2] = 280*AmountStable;
-                costUnitssStable[3] = 130*AmountStable;
-                costUnitssStable[4] = 0;
-				}
-				if (UnitssStable == 25) {
-				//25: druidri
-								costUnitssStable[1] = 300*AmountStable;
-                costUnitssStable[2] = 270*AmountStable;
-                costUnitssStable[3] = 190*AmountStable;
-                costUnitssStable[4] = 0;
-				}
-				if (UnitssStable == 26) {
-				//26: headuan
-								costUnitssStable[1] = 300*AmountStable;
-                costUnitssStable[2] = 380*AmountStable;
-                costUnitssStable[3] = 440*AmountStable;
-                costUnitssStable[4] = 0;
-				}
-			}
-				var totalcost = [0, 0, 0, 0, 0];
-								totalcost[1] = costUnitssStable[1] + costUnits[1];
-                totalcost[2] = costUnitssStable[2] + costUnits[2];
-                totalcost[3] = costUnitssStable[3] + costUnits[3];
-                totalcost[4] = costUnitssStable[4] + costUnits[4];
-				//util_1.log(`Totalcost Wood:${totalcost[1]} Clay:${totalcost[2]} Iron:${totalcost[3]} Crop:${totalcost[4]}`);
+				var Unit2_name = troops[own_tribe][UnitssStable].name;
+				var Unit_ID2 = troops[own_tribe][UnitssStable].id;
+				
+				costUnitssStable1[0] = troops[own_tribe][UnitssStable].costsW*Amount;
+				costUnitssStable1[1] = troops[own_tribe][UnitssStable].costsC*Amount;
+				costUnitssStable1[2] = troops[own_tribe][UnitssStable].costsI*Amount;
+			};
+			
+			//log(`Recruit Units:> ${Unit_name} cost  ${costUnits1} Stable:>${Unit2_name} cost  ${costUnitssStable1}`);
+			
+			var totalcost = [0, 0, 0];
+            totalcost[0] = costUnitssStable1[0] + costUnits1[0];
+            totalcost[1] = costUnitssStable1[1] + costUnits1[1];
+            totalcost[2] = costUnitssStable1[2] + costUnits1[2];
+				
+			//log(`Totalcost Wood:${totalcost[0]} Clay:${totalcost[1]} Iron:${totalcost[2]}`);
 
-      var resources = [0, 0, 0, 0, 0];
-								resources[1] = Math.min(totalcost[1], vill.storage['1']);
-                resources[2] = Math.min(totalcost[2], vill.storage['2']);
-                resources[3] = Math.min(totalcost[3], vill.storage['3']);
-                resources[4] = Math.min(totalcost[4], vill.storage['4']);
-
-		//	if (resources[1] + resources[2] + resources[3] + resources[4] > 0) {
-				if (vill.storage['1'] > resources[1] ) {
+				var resources = [0, 0, 0];
+					
+				if (vill.storage['1'] > totalcost[0] ) {
+                        resources[0] = 1;
+                    }
+				if (vill.storage['2'] > totalcost[1]) {
                         resources[1] = 1;
                     }
-				if (vill.storage['2'] > resources[2]) {
+				if (vill.storage['3'] > totalcost[2]) {
                         resources[2] = 1;
                     }
-				if (vill.storage['3'] > resources[3]) {
-                        resources[3] = 1;
-                    }
-				if (vill.storage['4'] > resources[4]) {
-                        resources[4] = 1;
-                    }
-
-				if (resources[1] + resources[2] + resources[3] + resources[4] == 4) {
+				//log(`Resources Wood:${resources[0]} Clay:${resources[1]} Iron:${resources[2]}`);
+		 
+		 
+				if (resources[0] + resources[1] + resources[2] == 3) {
 						if (UnitssOnOff > 0) {
-                        log(`Recruit Barracks ID:${this.options.village_name} LOCAT:${Locationidss} UNIT:${Unitss} Amount:${Amount}`);
-						await api.start_recruitUnitsBarracks(sourceVillage_id,Locationidss,Unitss,Amount);
+                        log(`Recruit Barracks At:${this.options.village_name} LOCAT:${Locationidss} UNIT:${Unit_ID} Amount:${Amount}`);
+						await api.start_recruitUnitsBarracks(sourceVillage_id,Locationidss,Unit_ID,Amount);
 						}
 						if (UnitssStableOnOff > 0) {
-						log(`Recruit Stable ID:${this.options.village_name} LOCAT:${LocationidssStable} UNIT:${UnitssStable} Amount:${AmountStable}`);
-						await api.start_recruitUnitsStable(sourceVillage_id,LocationidssStable,UnitssStable,AmountStable);
+						log(`Recruit Stable At:${this.options.village_name} LOCAT:${LocationidssStable} UNIT:${Unit_ID2} Amount:${AmountStable}`);
+						await api.start_recruitUnitsStable(sourceVillage_id,LocationidssStable,Unit_ID2,AmountStable);
 						}
 				}
                 else {
-                    await sleep(get_random_int(300, 600));
+					const wait = await get_random_int(300, 600);
+					log(`Resources no enough wait : ${wait}`);
+                    await sleep(wait);
 				}
 
 
