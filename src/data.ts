@@ -337,6 +337,7 @@ export const troops: any = {
 		},
 		8: {
 			name: 'Trebuchet',
+			id: '28',
 			attack: 70,
 			speed: 3,
 			infantry_defense: 45,
