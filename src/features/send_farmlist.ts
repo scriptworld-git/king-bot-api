@@ -68,7 +68,8 @@ class farm_feature extends feature_item {
 	}
 
 	get_long_description(): string {
-		return 'this feature will just send the farmlist in a given interval.';
+		// key in the frontend language.js file
+		return 'farming';
 	}
 
 	async run(): Promise<void> {
