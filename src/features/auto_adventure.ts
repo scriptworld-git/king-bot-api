@@ -35,7 +35,8 @@ class auto_adventure extends feature_single {
 	}
 
 	get_long_description(): string {
-		return 'this feature sends the hero automaticly on an adventure if the health is above given percentage.';
+		// key in the frontend language.js file
+		return 'hero';
 	}
 
 	set_options(options: Ioptions_hero): void {
