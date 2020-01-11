@@ -151,7 +151,7 @@ class timed_attack_feature extends feature_item {
 	}
 
 	get_long_description(): string {
-		return 'sends merchants from the origin village to the desination at a given interval.';
+		return null;
 	}
 
 	async run(): Promise<void> {

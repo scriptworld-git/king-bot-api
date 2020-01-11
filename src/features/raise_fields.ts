@@ -91,7 +91,8 @@ class raise extends feature_item {
 	}
 
 	get_long_description(): string {
-		return 'this feature will raise all your fields to a given level on it\'s own. it will always upgrade the type which got the lowest storage.';
+		// key in the frontend language.js file
+		return 'raise_fields';
 	}
 
 	async upgrade_field(): Promise<number> {

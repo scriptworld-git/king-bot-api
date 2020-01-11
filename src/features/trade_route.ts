@@ -125,7 +125,8 @@ class trade_feature extends feature_item {
 	}
 
 	get_long_description(): string {
-		return 'sends merchants from the origin village to the desination at a given interval.';
+		// key in the frontend language.js file
+		return 'trade_route';
 	}
 
 	enough_merchants(longData: any, resources: any): boolean {
