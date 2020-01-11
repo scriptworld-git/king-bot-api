@@ -78,7 +78,8 @@ class queue extends feature_item {
 	}
 
 	get_long_description(): string {
-		return 'this is an endless building queue. don\'t change the village once it\'s set. if you want to change the village, just do another building queue feature with your desired village';
+		// key in the frontend language.js file
+		return 'queue';
 	}
 
 	async run(): Promise<void> {
