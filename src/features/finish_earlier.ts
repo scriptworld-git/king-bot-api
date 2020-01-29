@@ -93,7 +93,8 @@ class finish_earlier extends feature_single {
 					const rest_time: number = finished - now;
 
 					// finish building instant
-					if (rest_time <= five_minutes) {
+					// add 2 seconds for safety
+					if (rest_time < (five_minutes - 2)) {
 						const res = await api.finish_now(vill.villageId, qu);
 						console.log(`finished building earlier for free in village ${vill.name}`);
 						continue;
@@ -104,7 +105,8 @@ class finish_earlier extends feature_single {
 				}
 			}
 
-			if (sleep_time) sleep_time = sleep_time - five_minutes + 1;
+			// sleep 5 seconds longer
+			if (sleep_time) sleep_time = sleep_time - five_minutes + 5;
 
 			if (!sleep_time || sleep_time <= 0) sleep_time = 60;
 			if (sleep_time > 120) sleep_time = 120;
