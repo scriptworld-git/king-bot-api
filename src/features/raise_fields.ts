@@ -197,9 +197,11 @@ class raise extends feature_item {
 			logger.info('upgrade building ' + upgrade_building.locationId + ' on village ' + village_obj.name, 'raise fields');
 
 			const upgrade_time: number = Number(upgrade_building.upgradeTime);
+			const five_minutes: number = 5 * 60;
 
 			// check if building time is less than 5 min
-			if (get_diff_time(upgrade_time) <= (5 * 60)) {
+			// add 2 seconds for safety
+			if (get_diff_time(upgrade_time) <= (five_minutes - 2)) {
 				await api.finish_now(village_id, 2);
 				logger.info('upgrade time less 5 min, instant finish!', 'raise fields');
 

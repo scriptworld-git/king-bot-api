@@ -139,8 +139,10 @@ class queue extends feature_item {
 					this.options.queue.shift();
 
 					const upgrade_time: number = Number(queue_item.upgrade_time);
+					const five_minutes: number = 5 * 60;
 
-					if (get_diff_time(upgrade_time) <= (5 * 60)) {
+					// add 2 seconds for safety
+					if (get_diff_time(upgrade_time) <= (five_minutes - 2)) {
 						await api.finish_now(village_id, 2);
 						logger.info('upgrade time less 5 min, instant finish!', 'building queue');
 
