@@ -1,7 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import createHttpsProxy from 'https-proxy-agent';
 import { clash_obj, get_date, log } from './util';
 import manage_login from './login';
-import settings from './settings';
 import database from './database';
 import { Iunits } from './interfaces';
 
@@ -12,8 +12,16 @@ class api {
 	token: string = '';
 	msid: string = '';
 
-	constructor() {
-		this.ax = axios.create();
+	init(proxy: string) {
+		const options: AxiosRequestConfig = {};
+
+		if (proxy != null && proxy != '') {
+			const agent = createHttpsProxy(proxy);
+			options.httpsAgent = agent;
+			log('using proxy');
+		}
+
+		this.ax = axios.create(options);
 		this.ax.defaults.withCredentials = true;
 		this.ax.defaults.headers['User-Agent'] = 'Chrome/51.0.2704.63';
 	}
